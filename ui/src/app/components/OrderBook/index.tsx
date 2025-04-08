@@ -10,7 +10,7 @@ const Book = (props: {
   return (
     <ul>
       {bookData.map((data) => (
-        <li className="relative grid grid-cols-5 mb-1">
+        <li className="relative grid grid-cols-5 mb-1 px-1">
           <div className={`absolute top-0 bottom-0 left-0 -z-10 ${
             props.type === 'ASK' ? 'bg-red-300' : 'bg-green-300'
           }`} style={{ right: '33%' }}></div>
@@ -26,7 +26,7 @@ const Book = (props: {
 const OrderBook = () => {
   return <div style={{ width: 400 }}>
     <div></div>
-    <div className="grid grid-cols-5">
+    <div className="grid grid-cols-5 px-1">
       <div className="col-span-1">Price</div>
       <div className="col-span-2 text-right">Size (ETH)</div>
       <div className="col-span-2 text-right">Total (ETH)</div>

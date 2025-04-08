@@ -37,10 +37,10 @@ const OrderBook = () => {
     <div>
       <Book type="ASK" />
     </div>
-    <div className="grid grid-cols-3">
-      <div className="col-span-1 text-center">Spread</div>
-      <div className="col-span-1 text-center">100.0</div>
-      <div className="col-span-1 text-center">6.452%</div>
+    <div className="grid grid-cols-5 px-1">
+      <div className="col-span-1 text-left">Spread</div>
+      <div className="col-span-2 text-right">100.0</div>
+      <div className="col-span-2 text-right">6.452%</div>
     </div>
     <div>
       <Book type="BID" />

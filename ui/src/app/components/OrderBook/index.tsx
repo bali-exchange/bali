@@ -14,9 +14,9 @@ const Book = (props: {
           <div className={`absolute top-0 bottom-0 left-0 -z-10 ${
             props.type === 'ASK' ? 'bg-red-300' : 'bg-green-300'
           }`} style={{ right: '33%' }}></div>
-          <div className="col-span-1">2,600.0</div>
-          <div className="col-span-2 text-right">172.3378</div>
-          <div className="col-span-2 text-right">42,236.2924</div>
+          <div className="col-span-1 hover:font-medium">2,600.0</div>
+          <div className="col-span-2 text-right hover:font-medium">172.3378</div>
+          <div className="col-span-2 text-right hover:font-medium">42,236.2924</div>
         </li>
       ))}
     </ul>
@@ -25,11 +25,11 @@ const Book = (props: {
 
 const OrderBook = () => {
   return <div className="w-96 text-sm border border-black">
-    <div className="flex justify-between px-1 mt-0.5">
+    <div className="flex justify-between px-1 mt-0.5 font-semibold">
       <div>100</div>
       <div>ETH</div>
     </div>
-    <div className="grid grid-cols-5 px-1 my-0.5">
+    <div className="grid grid-cols-5 px-1 my-0.5 font-semibold">
       <div className="col-span-1">Price</div>
       <div className="col-span-2 text-right">Size (ETH)</div>
       <div className="col-span-2 text-right">Total (ETH)</div>
@@ -37,7 +37,7 @@ const OrderBook = () => {
     <div>
       <Book type="ASK" />
     </div>
-    <div className="grid grid-cols-5 px-1 my-0.5">
+    <div className="grid grid-cols-5 px-1 my-0.5 font-medium">
       <div className="col-span-1 text-left">Spread</div>
       <div className="col-span-2 text-right">100.0</div>
       <div className="col-span-2 text-right">6.452%</div>

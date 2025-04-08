@@ -10,7 +10,7 @@ const Book = (props: {
   return (
     <ul>
       {bookData.map((data) => (
-        <li className="relative grid grid-cols-5 mb-1 px-1">
+        <li className="relative grid grid-cols-5 mb-1 last:mb-0 px-1">
           <div className={`absolute top-0 bottom-0 left-0 -z-10 ${
             props.type === 'ASK' ? 'bg-red-300' : 'bg-green-300'
           }`} style={{ right: '33%' }}></div>
@@ -24,8 +24,11 @@ const Book = (props: {
 };
 
 const OrderBook = () => {
-  return <div style={{ width: 400 }}>
-    <div></div>
+  return <div className="w-96 text-sm border border-black">
+    <div className="flex justify-between px-1">
+      <div>100</div>
+      <div>ETH</div>
+    </div>
     <div className="grid grid-cols-5 px-1">
       <div className="col-span-1">Price</div>
       <div className="col-span-2 text-right">Size (ETH)</div>
@@ -34,7 +37,11 @@ const OrderBook = () => {
     <div>
       <Book type="ASK" />
     </div>
-    <div></div>
+    <div className="grid grid-cols-3">
+      <div className="col-span-1 text-center">Spread</div>
+      <div className="col-span-1 text-center">100.0</div>
+      <div className="col-span-1 text-center">6.452%</div>
+    </div>
     <div>
       <Book type="BID" />
     </div>

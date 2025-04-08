@@ -25,11 +25,11 @@ const Book = (props: {
 
 const OrderBook = () => {
   return <div className="w-96 text-sm border border-black">
-    <div className="flex justify-between px-1">
+    <div className="flex justify-between px-1 mt-0.5">
       <div>100</div>
       <div>ETH</div>
     </div>
-    <div className="grid grid-cols-5 px-1">
+    <div className="grid grid-cols-5 px-1 my-0.5">
       <div className="col-span-1">Price</div>
       <div className="col-span-2 text-right">Size (ETH)</div>
       <div className="col-span-2 text-right">Total (ETH)</div>
@@ -37,7 +37,7 @@ const OrderBook = () => {
     <div>
       <Book type="ASK" />
     </div>
-    <div className="grid grid-cols-5 px-1">
+    <div className="grid grid-cols-5 px-1 my-0.5">
       <div className="col-span-1 text-left">Spread</div>
       <div className="col-span-2 text-right">100.0</div>
       <div className="col-span-2 text-right">6.452%</div>

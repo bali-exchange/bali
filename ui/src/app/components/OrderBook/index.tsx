@@ -18,7 +18,8 @@ const Book = (props: {
     const result = props.rows.slice(0, props.limit);
     let sum = 0;
     result.forEach((row) => {
-      row.tt = '1.2';
+      sum += Number(row.sz);
+      row.tt = sum.toFixed(4);
     });
     return props.type === 'ASK' ? result.reverse() : result;
   }, [props.type, props.rows, props.limit]);

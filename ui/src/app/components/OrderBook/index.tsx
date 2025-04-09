@@ -39,12 +39,12 @@ socket.onopen = (event: Event): void => {
 
   // 发送订阅请求
   const subscribeMessage = {
-    method: "subscribe",
+    method: 'subscribe',
     subscription: {
-      type: "l2Book",
-      coin: "@107",
-      nSigFigs: null
-    }
+      type: 'l2Book',
+      coin: 'ETH',
+      nSigFigs: null,
+    },
   };
 
   socket.send(JSON.stringify(subscribeMessage));

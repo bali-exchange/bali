@@ -22,8 +22,8 @@ const Book = (props: {
   limit: number,
 }) => {
   const rows = useMemo(() => {
-    const pxFractionDigits = 1;
-    const szFractionDigits = 4;
+    const pxFractionDigits = Math.max(...props.rows.map((row) => row.px.split('.')[1]?.length ?? 0));
+    const szFractionDigits = Math.max(...props.rows.map((row) => row.sz.split('.')[1]?.length ?? 0));
     let sum = 0;
     const result = props.rows.slice(0, props.limit).map((row) => {
       sum += Number(row.sz);

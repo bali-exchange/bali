@@ -58,7 +58,12 @@ const OrderBook = () => {
   const [bidBookRows, setBidBookRows] = useState<BookRow[]>([]);
 
   const spread = useMemo(() => {
-    return Number(askBookRows[0].px) - Number(bidBookRows[0].px);
+    return Number(askBookRows[0]?.px) - Number(bidBookRows[0]?.px);
+  }, [askBookRows, bidBookRows]);
+
+  const spreadPercentage = useMemo(() => {
+    const avgPx = (Number(askBookRows[0]?.px) + Number(bidBookRows[0]?.px)) / 2;
+    return Number((0.1 / avgPx * 100).toFixed(3)) + '%';
   }, [askBookRows, bidBookRows]);
 
   useEffect(() => {
@@ -111,7 +116,7 @@ const OrderBook = () => {
     <div className="grid grid-cols-5 px-1 my-0.5 font-medium">
       <div className="col-span-1 text-left">Spread</div>
       <div className="col-span-2 text-right">{spread}</div>
-      <div className="col-span-2 text-right">6.452%</div>
+      <div className="col-span-2 text-right">{spreadPercentage}</div>
     </div>
     <div>
       <Book type="BID" rows={bidBookRows} limit={11} />

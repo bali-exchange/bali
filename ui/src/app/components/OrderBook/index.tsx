@@ -10,9 +10,6 @@ interface BookRow {
 }
 
 const formatNumber = (num: number | string, fractionDigits = 4) => {
-  if (typeof num === 'string') {
-    fractionDigits = num.split('.')[1]?.length ?? 0;
-  }
   return Number(num).toLocaleString('en-US', {
     minimumFractionDigits: fractionDigits,
     maximumFractionDigits: fractionDigits,

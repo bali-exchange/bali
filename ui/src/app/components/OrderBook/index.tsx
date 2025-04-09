@@ -24,60 +24,34 @@ const Book = (props: {
 };
 
 const OrderBook = () => {
-  const flag = useRef<boolean>(true);
-
   useEffect(() => {
-    if (!flag.current) return;
-    flag.current = false;
+    const socket = new WebSocket('wss://api-ui.hyperliquid.xyz/ws');
 
-// 创建WebSocket连接
-const socket = new WebSocket('wss://api-ui.hyperliquid.xyz/ws');
+    socket.onopen = (event: Event) => {
+      socket.send(JSON.stringify({
+        method: 'subscribe',
+        subscription: {
+          type: 'l2Book',
+          coin: 'ETH',
+          nSigFigs: null,
+        },
+      }));
+    };
 
-// 连接建立时的回调
-socket.onopen = (event: Event): void => {
-  console.log('WebSocket连接已建立');
+    socket.onmessage = (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  // 发送订阅请求
-  const subscribeMessage = {
-    method: 'subscribe',
-    subscription: {
-      type: 'l2Book',
-      coin: 'ETH',
-      nSigFigs: null,
-    },
-  };
-
-  socket.send(JSON.stringify(subscribeMessage));
-};
-
-// 接收消息的回调
-socket.onmessage = (event: MessageEvent): void => {
-  try {
-    const data = JSON.parse(event.data);
-    console.log('收到数据:', data);
-    
-    // 如果需要处理数据，可以在这里添加代码
-  } catch (error) {
-    console.error('解析数据错误:', error);
-  }
-};
-
-// 连接关闭的回调
-socket.onclose = (event: CloseEvent): void => {
-  console.log('WebSocket连接已关闭:', event);
-};
-
-// 连接错误的回调
-socket.onerror = (error: Event): void => {
-  console.error('WebSocket错误:', error);
-};
-
-// 如果需要关闭连接
-const closeConnection = (): void => {
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.close();
-  }
-};
+    return () => {
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      }
+    };
   }, []);
 
   return <div className="w-96 text-sm border border-black">

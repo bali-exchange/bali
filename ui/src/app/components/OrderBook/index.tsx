@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 interface BookRow {
   px: string;
   sz: string;
+  tt?: string;
   n: number,
 }
 
@@ -15,6 +16,10 @@ const Book = (props: {
 }) => {
   const rows = useMemo(() => {
     const result = props.rows.slice(0, props.limit);
+    let sum = 0;
+    result.forEach((row) => {
+      row.tt = '1.2';
+    });
     return props.type === 'ASK' ? result.reverse() : result;
   }, [props.type, props.rows, props.limit]);
 
@@ -27,7 +32,7 @@ const Book = (props: {
           }`} style={{ right: '33%' }}></div>
           <div className="col-span-1 hover:font-medium">{row.px}</div>
           <div className="col-span-2 text-right hover:font-medium">{row.sz}</div>
-          <div className="col-span-2 text-right hover:font-medium">{row.sz}</div>
+          <div className="col-span-2 text-right hover:font-medium">{row.tt}</div>
         </li>
       ))}
     </ul>

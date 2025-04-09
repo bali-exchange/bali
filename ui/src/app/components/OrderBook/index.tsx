@@ -14,11 +14,8 @@ const Book = (props: {
   limit: number,
 }) => {
   const rows = useMemo(() => {
-    if (props.type === 'ASK') {
-      return props.rows.reverse().slice(-props.limit);
-    } else {
-      return props.rows.slice(0, props.limit);
-    }
+    const result = props.rows.slice(0, props.limit);
+    return props.type === 'ASK' ? result.reverse() : result;
   }, [props.type, props.rows, props.limit]);
 
   return (

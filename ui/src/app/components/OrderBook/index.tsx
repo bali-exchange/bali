@@ -22,11 +22,15 @@ const Book = (props: {
   limit: number,
 }) => {
   const rows = useMemo(() => {
-    const result = props.rows.slice(0, props.limit);
     let sum = 0;
-    result.forEach((row) => {
+    const result = props.rows.slice(0, props.limit).map((row) => {
       sum += Number(row.sz);
-      row.tt = formatNumber(sum);
+      return {
+        px: formatNumber(row.px),
+        sz: formatNumber(row.sz),
+        tt: formatNumber(sum),
+        n: row.n,
+      };
     });
     return props.type === 'ASK' ? result.reverse() : result;
   }, [props.type, props.rows, props.limit]);

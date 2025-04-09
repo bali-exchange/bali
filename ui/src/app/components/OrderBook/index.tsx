@@ -9,6 +9,13 @@ interface BookRow {
   n: number,
 }
 
+const formatNumber = (num: number | string, options: Intl.NumberFormatOptions = {
+  minimumFractionDigits: 4,
+  maximumFractionDigits: 4,
+}) => {
+  return Number(num).toLocaleString('en-US', options);
+};
+
 const Book = (props: {
   type: 'ASK' | 'BID',
   rows: BookRow[],
@@ -19,7 +26,7 @@ const Book = (props: {
     let sum = 0;
     result.forEach((row) => {
       sum += Number(row.sz);
-      row.tt = sum.toFixed(4);
+      row.tt = formatNumber(sum);
     });
     return props.type === 'ASK' ? result.reverse() : result;
   }, [props.type, props.rows, props.limit]);

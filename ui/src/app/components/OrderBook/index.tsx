@@ -1,22 +1,36 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+
+interface BookRow {
+  px: string;
+  sz: string;
+  n: number,
+}
 
 const Book = (props: {
   type: 'ASK' | 'BID',
+  rows: BookRow[],
+  limit: number,
 }) => {
-  const [bookData, setBookData] = useState<any[]>([1, 2, 3, 4, 5]);
+  const rows = useMemo(() => {
+    if (props.type === 'ASK') {
+      return props.rows.reverse().slice(-props.limit);
+    } else {
+      return props.rows.slice(0, props.limit);
+    }
+  }, [props.type, props.rows, props.limit]);
 
   return (
     <ul>
-      {bookData.map((data) => (
+      {rows.map((row) => (
         <li className="relative grid grid-cols-5 mb-1 last:mb-0 px-1">
           <div className={`absolute top-0 bottom-0 left-0 -z-10 ${
             props.type === 'ASK' ? 'bg-red-300' : 'bg-green-300'
           }`} style={{ right: '33%' }}></div>
-          <div className="col-span-1 hover:font-medium">2,600.0</div>
-          <div className="col-span-2 text-right hover:font-medium">172.3378</div>
-          <div className="col-span-2 text-right hover:font-medium">42,236.2924</div>
+          <div className="col-span-1 hover:font-medium">{row.px}</div>
+          <div className="col-span-2 text-right hover:font-medium">{row.sz}</div>
+          <div className="col-span-2 text-right hover:font-medium">{row.sz}</div>
         </li>
       ))}
     </ul>
@@ -24,10 +38,13 @@ const Book = (props: {
 };
 
 const OrderBook = () => {
+  const [askBookRows, setAskBookRows] = useState<BookRow[]>([]);
+  const [bidBookRows, setBidBookRows] = useState<BookRow[]>([]);
+
   useEffect(() => {
     const socket = new WebSocket('wss://api-ui.hyperliquid.xyz/ws');
 
-    socket.onopen = (event: Event) => {
+    socket.onopen = () => {
       socket.send(JSON.stringify({
         method: 'subscribe',
         subscription: {
@@ -38,10 +55,13 @@ const OrderBook = () => {
       }));
     };
 
-    socket.onmessage = (event: MessageEvent) => {
+    socket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        console.log(data);
+        if (data.channel === 'l2Book') {
+          setAskBookRows(data.data.levels[1]);
+          setBidBookRows(data.data.levels[0]);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -65,7 +85,7 @@ const OrderBook = () => {
       <div className="col-span-2 text-right">Total (ETH)</div>
     </div>
     <div>
-      <Book type="ASK" />
+      <Book type="ASK" rows={askBookRows} limit={11} />
     </div>
     <div className="grid grid-cols-5 px-1 my-0.5 font-medium">
       <div className="col-span-1 text-left">Spread</div>
@@ -73,7 +93,7 @@ const OrderBook = () => {
       <div className="col-span-2 text-right">6.452%</div>
     </div>
     <div>
-      <Book type="BID" />
+      <Book type="BID" rows={bidBookRows} limit={11} />
     </div>
   </div>;
 };

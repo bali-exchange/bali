@@ -57,6 +57,10 @@ const OrderBook = () => {
   const [askBookRows, setAskBookRows] = useState<BookRow[]>([]);
   const [bidBookRows, setBidBookRows] = useState<BookRow[]>([]);
 
+  const spread = useMemo(() => {
+    return Number(askBookRows[0].px) - Number(bidBookRows[0].px);
+  }, [askBookRows, bidBookRows]);
+
   useEffect(() => {
     const socket = new WebSocket('wss://api-ui.hyperliquid.xyz/ws');
 
@@ -106,7 +110,7 @@ const OrderBook = () => {
     </div>
     <div className="grid grid-cols-5 px-1 my-0.5 font-medium">
       <div className="col-span-1 text-left">Spread</div>
-      <div className="col-span-2 text-right">100.0</div>
+      <div className="col-span-2 text-right">{spread}</div>
       <div className="col-span-2 text-right">6.452%</div>
     </div>
     <div>

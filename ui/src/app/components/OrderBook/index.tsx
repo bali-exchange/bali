@@ -22,13 +22,15 @@ const Book = (props: {
   limit: number,
 }) => {
   const rows = useMemo(() => {
+    const pxFractionDigits = 1;
+    const szFractionDigits = 4;
     let sum = 0;
     const result = props.rows.slice(0, props.limit).map((row) => {
       sum += Number(row.sz);
       return {
-        px: formatNumber(row.px),
-        sz: formatNumber(row.sz),
-        tt: formatNumber(sum),
+        px: formatNumber(row.px, pxFractionDigits),
+        sz: formatNumber(row.sz, szFractionDigits),
+        tt: formatNumber(sum, szFractionDigits),
         n: row.n,
       };
     });

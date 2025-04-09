@@ -9,11 +9,14 @@ interface BookRow {
   n: number,
 }
 
-const formatNumber = (num: number | string, options: Intl.NumberFormatOptions = {
-  minimumFractionDigits: 4,
-  maximumFractionDigits: 4,
-}) => {
-  return Number(num).toLocaleString('en-US', options);
+const formatNumber = (num: number | string, fractionDigits = 4) => {
+  if (typeof num === 'string') {
+    fractionDigits = num.split('.')[1]?.length ?? 0;
+  }
+  return Number(num).toLocaleString('en-US', {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  });
 };
 
 const Book = (props: {

@@ -78,6 +78,7 @@ const OrderBook = () => {
           setAskBookRows(data.data.levels[1]);
           setBidBookRows(data.data.levels[0]);
         }
+        console.log(data);
       } catch (error) {
         console.error(error);
       }
